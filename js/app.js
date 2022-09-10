@@ -40,7 +40,8 @@ marca.addEventListener('change',(e)=>{
 });
 
 year.addEventListener('change',(e)=>{
-    datosBusqueda.year = e.target.value;
+    datosBusqueda.year = parseInt(e.target.value);
+    filtrarAuto();
 });
 precioMin.addEventListener('change',(e)=>{
     datosBusqueda.precioMin = e.target.value;
@@ -91,7 +92,7 @@ function llenarSelect()
 //FUNCION FILTRAR AUTO
 function filtrarAuto()
 {
-    const resultado = autos.filter(filtrarMarca); //USAMOS FILTER EN FUNCION DE ALTO NIVEL PORQUE UTILIZA OTRA FUNCION DENTRO
+    const resultado = autos.filter(filtrarMarca).filter(filtrarYear); //USAMOS FILTER EN FUNCION DE ALTO NIVEL PORQUE UTILIZA OTRA FUNCION DENTRO
     console.log(resultado);
 }
 
@@ -99,6 +100,14 @@ function filtrarMarca(auto){
     const {marca} = datosBusqueda;
     if(marca){
         return auto.marca === marca;  //RETORNAMOS LOS AUTOS DEL ARREGLO IDENTICOS A LO Q SELECCIONAMOS DEL SELECT
+    }
+    return auto; //RETORNAMOS TODOS LOS AUTOS YA QUE NO HAY SELECCION EN MARCA
+}
+
+function filtrarYear(auto){
+    const {year} = datosBusqueda;
+    if(year){
+        return auto.year === year;  //RETORNAMOS LOS AUTOS DEL ARREGLO IDENTICOS A LO Q SELECCIONAMOS DEL SELECT
     }
     return auto; //RETORNAMOS TODOS LOS AUTOS YA QUE NO HAY SELECCION EN MARCA
 }
