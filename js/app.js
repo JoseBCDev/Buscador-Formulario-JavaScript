@@ -52,13 +52,16 @@ precioMax.addEventListener('change',(e)=>{
     filtrarAuto();
 });
 puertas.addEventListener('change',(e)=>{
-    datosBusqueda.puertas = e.target.value;
+    datosBusqueda.puertas = parseInt(e.target.value);
+    filtrarAuto();
 });
 transmision.addEventListener('change',(e)=>{
     datosBusqueda.transmision = e.target.value;
+    filtrarAuto();
 });
 color.addEventListener('change',(e)=>{
     datosBusqueda.color = e.target.value;
+    filtrarAuto();
 });
 
 
@@ -103,7 +106,7 @@ function llenarSelect()
 //FUNCION FILTRAR AUTO
 function filtrarAuto()
 {
-    const resultado = autos.filter(filtrarMarca).filter(filtrarYear).filter(filtrarMinimo).filter(filtrarMaximo); //USAMOS FILTER EN FUNCION DE ALTO NIVEL PORQUE UTILIZA OTRA FUNCION DENTRO
+    const resultado = autos.filter(filtrarMarca).filter(filtrarYear).filter(filtrarMinimo).filter(filtrarMaximo).filter(filtrarPuertas).filter(filtrarTransmision).filter(filtrarColor); //USAMOS FILTER EN FUNCION DE ALTO NIVEL PORQUE UTILIZA OTRA FUNCION DENTRO
     mostrarAutos(resultado);
 }
 
@@ -138,3 +141,30 @@ function filtrarMaximo(auto){
     }
     return auto; //RETORNAMOS TODOS LOS AUTOS YA QUE NO HAY SELECCION 
 }
+
+function filtrarPuertas(auto){
+    const {puertas} = datosBusqueda;
+    if(puertas){
+        return auto.puertas === puertas;  //RETORNAMOS LOS AUTOS DEL ARREGLO IDENTICOS A LO Q SELECCIONAMOS DEL SELECT
+    }
+    return auto; //RETORNAMOS TODOS LOS AUTOS YA QUE NO HAY SELECCION 
+}
+
+function filtrarTransmision(auto){
+    const {transmision} = datosBusqueda;
+    if(transmision){
+        return auto.transmision === transmision;  //RETORNAMOS LOS AUTOS DEL ARREGLO IDENTICOS A LO Q SELECCIONAMOS DEL SELECT
+    }
+    return auto; //RETORNAMOS TODOS LOS AUTOS YA QUE NO HAY SELECCION 
+}
+
+function filtrarColor(auto)
+{
+const {color} = datosBusqueda;
+    if(color){
+        return auto.color === color;  //RETORNAMOS LOS AUTOS DEL ARREGLO IDENTICOS A LO Q SELECCIONAMOS DEL SELECT
+    }
+    return auto; //RETORNAMOS TODOS LOS AUTOS YA QUE NO HAY SELECCION 
+}
+
+
