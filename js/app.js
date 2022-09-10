@@ -26,7 +26,7 @@ const datosBusqueda = {
 //SE EJECUTA CUANDO SE CARGA EL ARCHIVO JS
 document.addEventListener('DOMContentLoaded',()=>{
 
-    mostrarAutos(); //Muestra todos los autos en RESULTADOS
+    mostrarAutos(autos); //Muestra todos los autos en RESULTADOS
 
     llenarSelect(); //Llenara el select de Año
 
@@ -62,8 +62,10 @@ color.addEventListener('change',(e)=>{
 
 //funciones
 
-function mostrarAutos()
+function mostrarAutos(autos)
 {
+    limpiarHTML();
+
     autos.forEach(auto => {
         const {marca,modelo,year,precio,puertas,color,transmision} = auto;
         const autoHTML = document.createElement('p');
@@ -75,6 +77,13 @@ function mostrarAutos()
     });
 }
 
+function limpiarHTML()
+{
+    while(resultado.firstChild)
+    {
+        resultado.removeChild(resultado.firstChild);
+    }
+}
 function llenarSelect()
 {
     //Generamos una lista del año actual hasta -10 años atras
@@ -93,7 +102,7 @@ function llenarSelect()
 function filtrarAuto()
 {
     const resultado = autos.filter(filtrarMarca).filter(filtrarYear); //USAMOS FILTER EN FUNCION DE ALTO NIVEL PORQUE UTILIZA OTRA FUNCION DENTRO
-    console.log(resultado);
+    mostrarAutos(resultado);
 }
 
 function filtrarMarca(auto){
@@ -109,5 +118,5 @@ function filtrarYear(auto){
     if(year){
         return auto.year === year;  //RETORNAMOS LOS AUTOS DEL ARREGLO IDENTICOS A LO Q SELECCIONAMOS DEL SELECT
     }
-    return auto; //RETORNAMOS TODOS LOS AUTOS YA QUE NO HAY SELECCION EN MARCA
+    return auto; //RETORNAMOS TODOS LOS AUTOS YA QUE NO HAY SELECCION EN LOS AÑOS
 }
