@@ -45,9 +45,11 @@ year.addEventListener('change',(e)=>{
 });
 precioMin.addEventListener('change',(e)=>{
     datosBusqueda.precioMin = e.target.value;
+    filtrarAuto();
 });
 precioMax.addEventListener('change',(e)=>{
     datosBusqueda.precioMax = e.target.value;
+    filtrarAuto();
 });
 puertas.addEventListener('change',(e)=>{
     datosBusqueda.puertas = e.target.value;
@@ -101,7 +103,7 @@ function llenarSelect()
 //FUNCION FILTRAR AUTO
 function filtrarAuto()
 {
-    const resultado = autos.filter(filtrarMarca).filter(filtrarYear); //USAMOS FILTER EN FUNCION DE ALTO NIVEL PORQUE UTILIZA OTRA FUNCION DENTRO
+    const resultado = autos.filter(filtrarMarca).filter(filtrarYear).filter(filtrarMinimo).filter(filtrarMaximo); //USAMOS FILTER EN FUNCION DE ALTO NIVEL PORQUE UTILIZA OTRA FUNCION DENTRO
     mostrarAutos(resultado);
 }
 
@@ -119,4 +121,20 @@ function filtrarYear(auto){
         return auto.year === year;  //RETORNAMOS LOS AUTOS DEL ARREGLO IDENTICOS A LO Q SELECCIONAMOS DEL SELECT
     }
     return auto; //RETORNAMOS TODOS LOS AUTOS YA QUE NO HAY SELECCION EN LOS AÑOS
+}
+
+function filtrarMinimo(auto){
+  const {precioMin} = datosBusqueda;
+    if(precioMin){
+        return auto.precio <= precioMin;  //RETORNAMOS LOS AUTOS DEL ARREGLO IDENTICOS A LO Q SELECCIONAMOS DEL SELECT
+    }
+    return auto; //RETORNAMOS TODOS LOS AUTOS YA QUE NO HAY SELECCION 
+}
+
+function filtrarMaximo(auto){
+    const {precioMax} = datosBusqueda;
+    if(precioMax){
+        return auto.precio >= precioMax;  //RETORNAMOS LOS AUTOS DEL ARREGLO IDENTICOS A LO Q SELECCIONAMOS DEL SELECT
+    }
+    return auto; //RETORNAMOS TODOS LOS AUTOS YA QUE NO HAY SELECCION 
 }
