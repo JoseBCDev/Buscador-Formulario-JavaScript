@@ -107,7 +107,24 @@ function llenarSelect()
 function filtrarAuto()
 {
     const resultado = autos.filter(filtrarMarca).filter(filtrarYear).filter(filtrarMinimo).filter(filtrarMaximo).filter(filtrarPuertas).filter(filtrarTransmision).filter(filtrarColor); //USAMOS FILTER EN FUNCION DE ALTO NIVEL PORQUE UTILIZA OTRA FUNCION DENTRO
-    mostrarAutos(resultado);
+    
+
+    if(resultado.length >0)
+    {
+        mostrarAutos(resultado);
+    }else{
+        noResultado();
+    }
+}
+
+function noResultado()
+{
+    limpiarHTML();
+    const div = document.createElement('div');
+        div.classList.add('alerta','error');
+        div.textContent = 'NO HAY RESULTADO, INTENTA CON OTROS TÉRMINOS DE BÚSQUEDA';
+
+        resultado.appendChild(div);
 }
 
 function filtrarMarca(auto){
